@@ -12,14 +12,47 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-size: 150px;
       font-family: Arial, sans-serif;
+    }
+
+    .number-container {
+      display: flex;
+      gap: 100px; /* Space between the two numbers */
+      align-items: flex-start;
+    }
+
+    .number-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .number-block img {
+      width: 150px; /* Image size */
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .number {
+      font-size: 150px;
     }
   </style>
 </head>
 <body>
 
-  <div id="number">0</div>
+  <div class="number-container">
+    <!-- First number -->
+    <div class="number-block">
+      <img src="image1.png" alt="Image 1">
+      <div id="number1" class="number">0</div>
+    </div>
+
+    <!-- Second number -->
+    <div class="number-block">
+      <img src="image2.png" alt="Image 2">
+      <div id="number2" class="number">0</div>
+    </div>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -35,14 +68,23 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const numberDiv = document.getElementById("number");
+    const number1Div = document.getElementById("number1");
+    const number2Div = document.getElementById("number2");
 
-    // Listen for changes in the "number" node
-    onValue(ref(db, "number"), (snapshot) => {
+    // Listen for first number
+    onValue(ref(db, "number1"), (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
-      numberDiv.textContent = data.value;
+      number1Div.textContent = data.value;
     });
+
+    // Listen for second number
+    onValue(ref(db, "number2"), (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      number2Div.textContent = data.value;
+    });
+
   </script>
 
 </body>

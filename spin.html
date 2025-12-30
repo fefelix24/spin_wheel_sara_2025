@@ -12,11 +12,17 @@
   </button>
 
   <!-- NUMBER button -->
-  <button onclick="addNumber()" style="font-size:30px;padding:20px;">
-    +1 NUMBER
+  <button onclick="addNumber1()" style="font-size:30px;padding:20px;">
+    +1 NUMBER [1]
   </button>
-  <button onclick="subbNumber()" style="font-size:30px;padding:20px;">
-    -1 NUMBER
+  <button onclick="subbNumber1()" style="font-size:30px;padding:20px;">
+    -1 NUMBER [1]
+  </button>
+  <button onclick="addNumber2()" style="font-size:30px;padding:20px;">
+    +1 NUMBER [2]
+  </button>
+  <button onclick="subbNumber2()" style="font-size:30px;padding:20px;">
+    -1 NUMBER [2]
   </button>
 
   <script type="module">
@@ -33,7 +39,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    let number = 0;
+    let number1 = 0;
+    let number2 = 0;
 
     // Spin button function
     window.spin = function () {
@@ -44,17 +51,31 @@
     };
 
     // Number button function
-    window.addNumber = function () {
-      number++;
-      set(ref(db, "number"), {
-        value: number,
+    window.addNumber1 = function () {
+      number1++;
+      set(ref(db, "number1"), {
+        value: number1,
         time: Date.now()
       });
     };
-    window.subbNumber = function () {
-      number--;
-      set(ref(db, "number"), {
-        value: number,
+    window.subbNumber1 = function () {
+      number1--;
+      set(ref(db, "number1"), {
+        value: number1,
+        time: Date.now()
+      });
+    };
+    window.addNumber2 = function () {
+      number2++;
+      set(ref(db, "number2"), {
+        value: number2,
+        time: Date.now()
+      });
+    };
+    window.subbNumber2 = function () {
+      number2--;
+      set(ref(db, "number2"), {
+        value: number2,
         time: Date.now()
       });
     };
