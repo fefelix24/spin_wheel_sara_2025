@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: transparent; }
+    #wheel { transition: transform 4s ease-out; }
+  </style>
+</head>
+<body>
+
+<img id="wheel" src="wheel.png" width="400">
+
+<script type="module">
+  // Firebase imports
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAs71QMd4IrDUP3sYYgcQ_AWL6C-kygmiM",
+    authDomain: "shared-wheel-sara-2025.firebaseapp.com",
+    databaseURL: "https://shared-wheel-sara-2025-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "shared-wheel-sara-2025",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const wheel = document.getElementById("wheel");
+
+  onValue(ref(db, "spin"), (snapshot) => {
+    const data = snapshot.val();
+    if (!data) return;
+
+    const seed = data.seed;
+    const rotation = 360 * 5 + seed * 360; // same math on both streams
+    wheel.style.transform = `rotate(${rotation}deg)`;
+  });
+</script>
+
+</body>
+</html>
