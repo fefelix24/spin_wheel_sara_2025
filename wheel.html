@@ -25,17 +25,31 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  const wheel = document.getElementById("wheel");
+const wheel = document.getElementById("wheel");
 
-  onValue(ref(db, "spin"), (snapshot) => {
-    const data = snapshot.val();
-    if (!data) return;
+let currentRotation = 0;
+let firstLoad = true;
 
-    const seed = data.seed;
-    const rotation = 360 * 5 + seed * 360; // same math on both streams
-    wheel.style.transform = `rotate(${rotation}deg)`;
-  });
+onValue(ref(db, "spin"), (snapshot) => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  // Prevent spinning on page load
+  if (firstLoad) {
+    firstLoad = false;
+    return;
+  }
+
+  const seed = data.seed;
+
+  // Always ADD rotation
+  currentRotation += 360 * 5 + seed * 360;
+
+  wheel.style.transform = `rotate(${currentRotation}deg)`;
+});
+
 </script>
 
 </body>
 </html>
+
