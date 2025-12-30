@@ -6,8 +6,17 @@
 </head>
 <body>
 
-  <button onclick="spin()" style="font-size:30px;padding:20px;">
+  <!-- SPIN button -->
+  <button onclick="spin()" style="font-size:30px;padding:20px;margin-right:20px;">
     SPIN
+  </button>
+
+  <!-- NUMBER button -->
+  <button onclick="addNumber()" style="font-size:30px;padding:20px;">
+    +1 NUMBER
+  </button>
+  <button onclick="subbNumber()" style="font-size:30px;padding:20px;">
+    -1 NUMBER
   </button>
 
   <script type="module">
@@ -16,17 +25,36 @@
 
     const firebaseConfig = {
       apiKey: "AIzaSyAs71QMd4IrDUP3sYYgcQ_AWL6C-kygmiM",
-    authDomain: "shared-wheel-sara-2025.firebaseapp.com",
-    databaseURL: "https://shared-wheel-sara-2025-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "shared-wheel-sara-2025",
+      authDomain: "shared-wheel-sara-2025.firebaseapp.com",
+      databaseURL: "https://shared-wheel-sara-2025-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "shared-wheel-sara-2025",
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    let number = 0;
+
+    // Spin button function
     window.spin = function () {
       set(ref(db, "spin"), {
         seed: Math.random(),
+        time: Date.now()
+      });
+    };
+
+    // Number button function
+    window.addNumber = function () {
+      number++;
+      set(ref(db, "number"), {
+        value: number,
+        time: Date.now()
+      });
+    };
+    window.subbNumber = function () {
+      number--;
+      set(ref(db, "number"), {
+        value: number,
         time: Date.now()
       });
     };
