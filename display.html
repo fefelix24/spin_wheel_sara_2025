@@ -13,11 +13,19 @@
       align-items: center;
       height: 100vh;
       font-family: Arial, sans-serif;
+      flex-direction: column;
+    }
+
+    /* Title (NO glow) */
+    #title {
+      font-size: 64px;
+      margin-bottom: 40px;
+      text-align: center;
     }
 
     .number-container {
       display: flex;
-      gap: 100px; /* Space between the two numbers */
+      gap: 100px;
       align-items: flex-start;
     }
 
@@ -28,7 +36,7 @@
     }
 
     .number-block img {
-      width: 150px; /* Image size */
+      width: 150px;
       height: auto;
       margin-bottom: 20px;
     }
@@ -36,18 +44,40 @@
     .number {
       font-size: 150px;
     }
+
+    /* Glow animation */
+    @keyframes pulseGlow {
+      0% {
+        text-shadow: none;
+        transform: scale(1);
+      }
+      50% {
+        text-shadow:
+          0 0 20px rgba(255,255,255,0.8),
+          0 0 40px rgba(255,255,255,0.6);
+        transform: scale(1.05);
+      }
+      100% {
+        text-shadow: none;
+        transform: scale(1);
+      }
+    }
+
+    .glow {
+      animation: pulseGlow 0.6s ease-out;
+    }
   </style>
 </head>
 <body>
 
+  <div id="title">YOUR TITLE HERE</div>
+
   <div class="number-container">
-    <!-- First number -->
     <div class="number-block">
       <img src="image1.png" alt="Image 1">
       <div id="number1" class="number">0</div>
     </div>
 
-    <!-- Second number -->
     <div class="number-block">
       <img src="image2.png" alt="Image 2">
       <div id="number2" class="number">0</div>
@@ -71,20 +101,24 @@
     const number1Div = document.getElementById("number1");
     const number2Div = document.getElementById("number2");
 
-    // Listen for first number
+    function updateNumber(el, value) {
+      el.textContent = value;
+      el.classList.remove("glow");
+      void el.offsetWidth; // restart animation
+      el.classList.add("glow");
+    }
+
     onValue(ref(db, "number1"), (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
-      number1Div.textContent = data.value;
+      updateNumber(number1Div, data.value);
     });
 
-    // Listen for second number
     onValue(ref(db, "number2"), (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
-      number2Div.textContent = data.value;
+      updateNumber(number2Div, data.value);
     });
-
   </script>
 
 </body>

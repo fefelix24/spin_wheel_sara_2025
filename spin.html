@@ -3,27 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Spin Button</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      font-size: 30px;
+      padding: 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    input {
+      font-size: 24px;
+      padding: 10px;
+      width: 400px;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- SPIN button -->
-  <button onclick="spin()" style="font-size:30px;padding:20px;margin-right:20px;">
-    SPIN
-  </button>
+  <!-- SPIN -->
+  <button onclick="spin()">SPIN</button>
 
-  <!-- NUMBER button -->
-  <button onclick="addNumber1()" style="font-size:30px;padding:20px;">
-    +1 NUMBER [1]
-  </button>
-  <button onclick="subbNumber1()" style="font-size:30px;padding:20px;">
-    -1 NUMBER [1]
-  </button>
-  <button onclick="addNumber2()" style="font-size:30px;padding:20px;">
-    +1 NUMBER [2]
-  </button>
-  <button onclick="subbNumber2()" style="font-size:30px;padding:20px;">
-    -1 NUMBER [2]
-  </button>
+  <br><br>
+
+  <!-- NUMBERS -->
+  <button onclick="addNumber1()">+1 NUMBER [DRAGIRA]</button>
+  <button onclick="subbNumber1()">-1 NUMBER [DRAGIRA]</button>
+
+  <br>
+
+  <button onclick="addNumber2()">+1 NUMBER [SHARA]</button>
+  <button onclick="subbNumber2()">-1 NUMBER [SHARA]</button>
+
+  <br><br><hr><br>
+
+  <!-- TEXT CONTROL -->
+  <input id="textInput" placeholder="Enter wheel text here">
+  <br>
+  <button onclick="updateText()">UPDATE WHEEL TEXT</button>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -42,7 +63,7 @@
     let number1 = 0;
     let number2 = 0;
 
-    // Spin button function
+    // SPIN
     window.spin = function () {
       set(ref(db, "spin"), {
         seed: Math.random(),
@@ -50,34 +71,30 @@
       });
     };
 
-    // Number button function
+    // NUMBER 1
     window.addNumber1 = function () {
       number1++;
-      set(ref(db, "number1"), {
-        value: number1,
-        time: Date.now()
-      });
+      set(ref(db, "number1"), { value: number1 });
     };
     window.subbNumber1 = function () {
       number1--;
-      set(ref(db, "number1"), {
-        value: number1,
-        time: Date.now()
-      });
+      set(ref(db, "number1"), { value: number1 });
     };
+
+    // NUMBER 2
     window.addNumber2 = function () {
       number2++;
-      set(ref(db, "number2"), {
-        value: number2,
-        time: Date.now()
-      });
+      set(ref(db, "number2"), { value: number2 });
     };
     window.subbNumber2 = function () {
       number2--;
-      set(ref(db, "number2"), {
-        value: number2,
-        time: Date.now()
-      });
+      set(ref(db, "number2"), { value: number2 });
+    };
+
+    // TEXT CONTROL
+    window.updateText = function () {
+      const text = document.getElementById("textInput").value;
+      set(ref(db, "text/message"), text);
     };
   </script>
 
