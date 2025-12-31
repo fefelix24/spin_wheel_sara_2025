@@ -16,7 +16,7 @@
       flex-direction: column;
     }
 
-    /* Title (NO glow) */
+    /* Title */
     #title {
       font-size: 64px;
       margin-bottom: 40px;
@@ -25,7 +25,7 @@
 
     .number-container {
       display: flex;
-      gap: 100px;
+      gap: 120px;
       align-items: flex-start;
     }
 
@@ -43,6 +43,15 @@
 
     .number {
       font-size: 150px;
+    }
+
+    .sub-label {
+      margin-top: 30px;
+      font-size: 32px;
+    }
+
+    .sub-number {
+      font-size: 80px;
     }
 
     /* Glow animation */
@@ -70,16 +79,21 @@
 </head>
 <body>
 
-  <div id="title">DRINK COUNTER</div>
+  <div id="title">YOUR TITLE HERE</div>
 
   <div class="number-container">
+    <!-- DRINK COUNTER + Falsches Wort -->
     <div class="number-block">
-      <img src="image1.png" alt="Image 1">
+      <img src="image1.png" alt="Drink">
       <div id="number1" class="number">0</div>
+
+      <div class="sub-label">Falsches Wort</div>
+      <div id="falschesWort" class="sub-number">0</div>
     </div>
 
+    <!-- SECOND MAIN COUNTER -->
     <div class="number-block">
-      <img src="image2.png" alt="Image 2">
+      <img src="image2.png" alt="Other">
       <div id="number2" class="number">0</div>
     </div>
   </div>
@@ -100,11 +114,12 @@
 
     const number1Div = document.getElementById("number1");
     const number2Div = document.getElementById("number2");
+    const falschesWortDiv = document.getElementById("falschesWort");
 
     function updateNumber(el, value) {
       el.textContent = value;
       el.classList.remove("glow");
-      void el.offsetWidth; // restart animation
+      void el.offsetWidth;
       el.classList.add("glow");
     }
 
@@ -119,8 +134,13 @@
       if (!data) return;
       updateNumber(number2Div, data.value);
     });
+
+    onValue(ref(db, "falschesWort"), (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      updateNumber(falschesWortDiv, data.value);
+    });
   </script>
 
 </body>
 </html>
-

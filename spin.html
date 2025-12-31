@@ -21,6 +21,9 @@
       width: 400px;
       margin: 10px;
     }
+    hr {
+      margin: 40px 0;
+    }
   </style>
 </head>
 <body>
@@ -30,16 +33,24 @@
 
   <br><br>
 
-  <!-- NUMBERS -->
+  <!-- DRINK COUNTER -->
   <button onclick="addNumber1()">+1 NUMBER [DRAGIRA]</button>
   <button onclick="subbNumber1()">-1 NUMBER [DRAGIRA]</button>
 
   <br>
 
+  <!-- SECOND COUNTER -->
   <button onclick="addNumber2()">+1 NUMBER [SHARA]</button>
   <button onclick="subbNumber2()">-1 NUMBER [SHARA]</button>
 
-  <br><br><hr><br>
+  <hr>
+
+  <!-- FALSCHES WORT -->
+  <button onclick="addFalschesWort()">+1 FALSCHES WORT</button>
+  <button onclick="subbFalschesWort()">-1 FALSCHES WORT</button>
+  <button onclick="resetFalschesWort()">RESET FALSCHES WORT</button>
+
+  <hr>
 
   <!-- TEXT CONTROL -->
   <input id="textInput" placeholder="Enter wheel text here">
@@ -62,6 +73,7 @@
 
     let number1 = 0;
     let number2 = 0;
+    let falschesWort = 0;
 
     // SPIN
     window.spin = function () {
@@ -89,6 +101,20 @@
     window.subbNumber2 = function () {
       number2--;
       set(ref(db, "number2"), { value: number2 });
+    };
+
+    // FALSCHES WORT
+    window.addFalschesWort = function () {
+      falschesWort++;
+      set(ref(db, "falschesWort"), { value: falschesWort });
+    };
+    window.subbFalschesWort = function () {
+      falschesWort--;
+      set(ref(db, "falschesWort"), { value: falschesWort });
+    };
+    window.resetFalschesWort = function () {
+      falschesWort = 0;
+      set(ref(db, "falschesWort"), { value: falschesWort });
     };
 
     // TEXT CONTROL
